@@ -18,6 +18,9 @@ h1 {
 }
 
 .numbers-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
     width: 80%;
     margin: 0 auto;
     border: 1rem solid #007755;
@@ -25,3 +28,10 @@ h1 {
     font-size: 5rem;
 }
 
+.numbers-container span::before{
+    content: "-";
+}
+
+.numbers-container span::after{
+    content: "-";
+}

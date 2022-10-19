@@ -37,3 +37,55 @@ Buon lavoro! :muscolo: */
 //          PER ogni numero di numeri indovinati stamapre a schermo il numero 
 
 
+// Start Game
+// Recuperare l'elemento del DOM per inserire i numeri
+const allRandomsNumbersElement = document.getElementById("random-numbers");
+const randomNumbersArray = getRndArrayOfInt(5,1,100);
+console.log(allRandomsNumbersElement,randomNumbersArray);
+
+
+for (let i = 0; i < randomNumbersArray.length; i++) {
+    thisRandomNumber = randomNumbersArray[i];
+    allRandomsNumbersElement.innerHTML += (`<span>${thisRandomNumber}</span>`);
+}
+
+// singleRandomNumberElement = document.createElement("span");
+// singleRandomNumberElement.innerHTML("")
+// allRandomNumberElement.appendChild(singleRandomNumberElement);
+// console.log(getRndArrayOfInt(5,1,100));
+
+// FUNCTIONS
+/**
+ * Description Funzione che crea un array di numeri casuale e non ripetuti delle dimensioni volute
+ * @param {number} arrayDimension Numero di indici dell'array
+ * @param {number} minNumber Minimo del singolo numero
+ * @param {number} maxNumber Massimo del singolo numero
+ * @returns {array} Array di numeri interi casuali non ripetuti
+ */
+function getRndArrayOfInt(arrayDimension, minNumber , maxNumber) {
+
+    let arrayReturn = [];
+
+    while (arrayReturn.length < arrayDimension) {
+        const thisRndNumber = getRndInt(minNumber, maxNumber);
+        console.log("casuale", thisRndNumber);
+
+        if (!arrayReturn.includes(thisRndNumber)){
+            arrayReturn.push(thisRndNumber);
+        }
+    }
+
+    return arrayReturn;
+}
+
+/**
+ * Description funzione per ottenere un numero intero random tra min e max compresi 
+ * @param {number} min minimo
+ * @param {number} max massimo
+ * @returns {number} numero casuale 
+ */
+ function getRndInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1) + min); 
+  }
