@@ -7,7 +7,21 @@
 
 html {
     font-size: 100%;
+    text-align: center;
 
-    background-color: brown;
+    color: #007755;
+    background-color: #ffffff;
+}
+
+h1 {
+    font-size: 7rem;
+}
+
+.numbers-container {
+    width: 80%;
+    margin: 0 auto;
+    border: 1rem solid #007755;
+    border-radius: 10px;
+    font-size: 5rem;
 }
 
