@@ -35,3 +35,11 @@ h1 {
 .numbers-container span::after{
     content: "-";
 }
+
+.numbers-container.hidden {
+    display: none;
+}
+
+.countdown {
+    font-size: 8rem;
+}

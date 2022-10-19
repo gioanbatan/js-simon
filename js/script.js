@@ -15,9 +15,13 @@ Buon lavoro! :muscolo: */
 //      SE un numero generato casualmente è già presente nell'array generarne un altro
 //      Aggiungere il numero all'array
 //      Quando l'array è pieno proseguire
+// ---
 
 // Mostrare i numeri nella pagina
+// ---
+
 // Creare un timer di 30 secondi e avviarlo
+
 // Al termine del timer nascondere i numeri
 
 // Creare un array per contenere i numeri dati dal giocatore "numeri giocatore" 
@@ -40,21 +44,80 @@ Buon lavoro! :muscolo: */
 // Start Game
 // Recuperare l'elemento del DOM per inserire i numeri
 const allRandomsNumbersElement = document.getElementById("random-numbers");
+const countdownElement = document.getElementById("countdown");
 const randomNumbersArray = getRndArrayOfInt(5,1,100);
 console.log(allRandomsNumbersElement,randomNumbersArray);
-
 
 for (let i = 0; i < randomNumbersArray.length; i++) {
     thisRandomNumber = randomNumbersArray[i];
     allRandomsNumbersElement.innerHTML += (`<span>${thisRandomNumber}</span>`);
 }
 
-// singleRandomNumberElement = document.createElement("span");
-// singleRandomNumberElement.innerHTML("")
-// allRandomNumberElement.appendChild(singleRandomNumberElement);
-// console.log(getRndArrayOfInt(5,1,100));
+let timer = setTimeout(function() {
+    allRandomsNumbersElement.classList.add("hidden");
+    console.log("finit");
+}, 10);
 
+
+let timeLeft = 30;
+let countdown = setInterval(function() {
+    timeLeft--;
+    if (timeLeft > 0) {
+        countdownElement.innerHTML = timeLeft;
+    } else {
+        countdownElement.innerHTML = "TEMPO SCADUTO!";
+        countdown = clearInterval();
+    }
+}, 1000);
+
+userNumbersArray = userNumbersToRequest(randomNumbersArray.length);
+
+guessNumbersArray = arrayComparator(randomNumbersArray, userNumbersArray);
+
+console.log("COPARE", guessNumbersArray, guessNumbersArray.lenght, "random", randomNumbersArray, randomNumbersArray.length);
+
+//Messages
+if (guessNumbersArray.lenght === randomNumbersArray.lenght) {
+    showMessage(`HAI VINTO! Hai indovinato tutti i numeri: ${guessNumbersArray}`)
+} else if (guessNumbersArray.lenght < randomNumbersArray.lenghte && guessNumbersArray.lenght > 0) {
+    showMessage(`HAI PERSO! Hai indovinato ${guessNumbersArray.length} su ${randomNumbersArray}: ${guessNumbersArray}`);
+} else if (guessNumbersArray.length === 0) {
+    showMessage(`HAI PERSO! Non hai indovinato nessun numero!`);
+} 
+/**
+ * Description Confronta due array della stessa lunghezza (o comunque fino alla fine del primo array-attributo) e ne copia i valori presenti in entrambi in un array di ritorno
+ * @param {array} firstArray Primo array (determina la lunghezza del confronto)
+ * @param {array} secondArray Secondo array
+ * @returns {array} Array di ritorno
+ */
+function arrayComparator(firstArray, secondArray) {
+    let identicalArray = [];
+    for (let i = 0; i < firstArray.length; i++) {
+        thisValue = firstArray[i];
+        if (secondArray.includes(thisValue)) {
+            identicalArray.push(thisValue);
+        }
+    }
+
+    return identicalArray;
+}
 // FUNCTIONS
+/**
+ * Description La funzione chiede all'utente di inserire numeri quanti sono i numeri richiesti dal parametro e li inserisce nell'array di ritorno
+ * @param {number} userNumbersLengthArray Lunghezza dell'array di ritorno
+ * @returns {array} userReturnArray L'array di ritorno
+ */
+function userNumbersToRequest(userNumbersLengthArray) {
+    userReturnArray = [];
+    for (let i = 0; i < userNumbersLengthArray; i++) {
+        const question = (parseInt(prompt(`Inserisci un numero (${i+1}/${userNumbersLengthArray})`)));
+
+        userReturnArray.push(question);
+    }
+
+    return userReturnArray;
+}
+
 /**
  * Description Funzione che crea un array di numeri casuale e non ripetuti delle dimensioni volute
  * @param {number} arrayDimension Numero di indici dell'array
@@ -79,13 +142,24 @@ function getRndArrayOfInt(arrayDimension, minNumber , maxNumber) {
 }
 
 /**
+ * Description Mostra il messaggio fornito
+ * @param {string} text Testo del messaggio
+ * @returns {}
+ */
+function showMessage(text){
+    alert(text);
+}
+
+/**
  * Description funzione per ottenere un numero intero random tra min e max compresi 
  * @param {number} min minimo
  * @param {number} max massimo
  * @returns {number} numero casuale 
  */
- function getRndInt(min, max) {
+function getRndInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
+    
     return Math.floor(Math.random() * (max - min + 1) + min); 
-  }
+}
+
